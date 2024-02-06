@@ -1,43 +1,43 @@
 package arrayList;
-import java.io.*;
-import java.util.*;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
- * Arraylist Serialization and Deserialization
- * using FileOutputStream the input file is given 
- * using the ObjectOutputStream it is converted into object and is available to write in it
+ * ArrayList Serialization and Deserialization Using FileOutputStream, the input
+ * file is given Using ObjectOutputStream, it is converted into an object and is
+ * available to write in it
  * 
- * In Deserialization bytestream is converted back to object
- * ois.readObject() reads the byte stream and convert it into ArrayList
+ * In Deserialization, byte stream is converted back to object ois.readObject()
+ * reads the byte stream and converts it into ArrayList
  */
-public class SerializationAndDeserialzation {
-public static void main(String[] args) {
-	ArrayList<String> list = new ArrayList<String>();
-	list.add("Rajesh");
-	list.add("abhilash");
-	list.add("nost");
-	
-	try {
-		//serialization
-		FileOutputStream fos= new FileOutputStream("file");
-		ObjectOutputStream oos = new ObjectOutputStream(fos);
-		oos.writeObject(list);
-		fos.close();
-		oos.close();
-		
-		//deserialization
-		FileInputStream fis = new FileInputStream("file");
-		ObjectInputStream ois= new ObjectInputStream(fis);
-		ArrayList al = (ArrayList)ois.readObject();
-		System.out.println(al);
-		ois.close();
-		fis.close();
+public class SerializationAndDeserialization {
+	private static final Logger log = Logger.getLogger(SerializationAndDeserialization.class.getName());
+
+	public static void main(String[] args) {
+		ArrayList<String> list = new ArrayList<String>();
+		list.add("Rajesh");
+		list.add("Abhilash");
+		list.add("Nost");
+
+		try {
+			// Serialization
+			FileOutputStream fos = new FileOutputStream("file");
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(list);
+			fos.close();
+			oos.close();
+
+			// Deserialization
+			FileInputStream fis = new FileInputStream("file");
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			ArrayList<?> deserializedList = (ArrayList<?>) ois.readObject();
+			log.info(deserializedList.toString());
+			ois.close();
+			fis.close();
+		} catch (Exception e) {
+			log.warning(e.toString());
+		}
 	}
-	catch(Exception e)
-	{
-		System.out.println(e);
-	
-	}
-}
 }
